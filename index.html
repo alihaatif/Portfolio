@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aliha Atif - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.light-mode {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        body.light-mode .bg-animation {
+            opacity: 0.1;
+        }
+
+        body.light-mode nav {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .logo,
+        body.light-mode .nav-links a {
+            color: #1a1a1a;
+        }
+
+        body.light-mode .hero h1 .title-line {
+            color: #1a1a1a;
+        }
+
+        body.light-mode .hero p {
+            color: #555;
+        }
+
+        body.light-mode .experience-card,
+        body.light-mode .award-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .experience-card:hover,
+        body.light-mode .award-card:hover {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .experience-card ul li,
+        body.light-mode .about-content p,
+        body.light-mode .contact-content p {
+            color: #555;
+        }
+
+        body.light-mode .experience-card .period {
+            color: #666;
+        }
+
+        body.light-mode .skill-tag {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode section {
+            background: #f5f5f5;
+        }
+
+        body.light-mode #activities,
+        body.light-mode #volunteer {
+            background: rgba(0, 0, 0, 0.02) !important;
+        }
+
+        body.light-mode footer {
+            background: rgba(255, 255, 255, 0.9);
+            color: #999;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translate(100px, -100px) scale(1.2);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-50px, -200px) scale(0.8);
+                opacity: 0.3;
+            }
+            75% {
+                transform: translate(-150px, -100px) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .theme-toggle:hover {
+            border-color: #00f5ff;
+            transform: rotate(180deg);
+        }
+
+        body.light-mode .theme-toggle {
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .theme-toggle:hover {
+            border-color: #00f5ff;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.5); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 50px 50px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #00f5ff;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            animation: slideIn 1s ease-out;
+        }
+
+        .hero h1 .name {
+            display: block;
+            background: linear-gradient(120deg, #fff 0%, #00f5ff 50%, #ff00ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 .title-line {
+            display: block;
+            color: #fff;
+            font-size: 48px;
+            margin-top: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #999;
+            margin-bottom: 40px;
+            max-width: 700px;
+            line-height: 1.6;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 48px;
+            background: transparent;
+            border: 2px solid #00f5ff;
+            border-radius: 0;
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+            animation: fadeIn 2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #00f5ff;
+            transition: left 0.4s;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            color: #0a0a0a;
+            border-color: #00f5ff;
+        }
+
+        .cta-button.secondary {
+            border-color: #ff00ff;
+        }
+
+        .cta-button.secondary::before {
+            background: #ff00ff;
+        }
+
+        .cta-button.secondary:hover {
+            border-color: #ff00ff;
+        }
+
+        body.light-mode .cta-button {
+            color: #1a1a1a;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        section {
+            position: relative;
+            padding: 100px 50px;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 48px;
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .experience-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-10px);
+            border-color: #00f5ff;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+        }
+
+        .experience-card h3 {
+            color: #00f5ff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .experience-card .role {
+            color: #ff00ff;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .experience-card .period {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .experience-card ul {
+            list-style: none;
+            color: #ccc;
+        }
+
+        .experience-card ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .experience-card ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #00f5ff;
+        }
+
+        .skills-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .skill-category {
+            margin-bottom: 40px;
+        }
+
+        .skill-category h3 {
+            color: #ff00ff;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(45deg, rgba(0, 245, 255, 0.2), rgba(255, 0, 255, 0.2));
+            border: 1px solid rgba(0, 245, 255, 0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .award-card {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .award-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
+        }
+
+        .award-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-email {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #00f5ff;
+            border-radius: 10px;
+            color: #00f5ff;
+            font-size: 20px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .contact-email:hover {
+            background: rgba(0, 245, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(10, 10, 10, 0.9);
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            .hero p {
+                font-size: 18px;
+            }
+            nav {
+                padding: 15px 20px;
+            }
+            section {
+                padding: 50px 20px;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation" id="particles"></div>
+
+    <nav>
+        <div class="logo">ALIHA ATIF</div>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#activities">Activities</a>
+                <a href="#research">Research</a>
+                <a href="#volunteer">Volunteer</a>
+                <a href="#skills">Skills</a>
+                <a href="#awards">Awards</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                🌙
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">Strategic Leader & Social Innovator</div>
+            <h1>
+                <span class="name">Aliha Atif</span>
+                <span class="title-line">Driving Impact Through Innovation</span>
+            </h1>
+            <p>Transforming communities through strategic initiatives, creative storytelling, and meaningful advocacy. Proven track record of leading high-impact projects that serve 100,000+ individuals annually.</p>
+            <div class="hero-buttons">
+                <a href="mailto:alihaatif26@gmail.com" class="cta-button">Get In Touch</a>
+                <a href="#" class="cta-button secondary" id="downloadCV">
+                    <span>Download CV</span>
+                    <span>📄</span>
+                </a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" class="cta-button secondary">
+                    <span>LinkedIn</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <p>Creative and socially-driven leader with experience in event management, digital strategy, teaching, and advocacy. Skilled in leading campaigns, coordinating large-scale events, and building community engagement. Passionate about using entrepreneurship and storytelling to drive meaningful change.</p>
+            <div style="display: flex; justify-content: space-around; margin-top: 50px; flex-wrap: wrap; gap: 30px;">
+                <div>
+                    <div class="stat-number">100K+</div>
+                    <p>People Served</p>
+                </div>
+                <div>
+                    <div class="stat-number">PKR 2M+</div>
+                    <p>Funds Raised</p>
+                </div>
+                <div>
+                    <div class="stat-number">12+</div>
+                    <p>Active Projects</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="experience-grid">
+            <div class="experience-card">
+                <h3>Tammana Foundation</h3>
+                <div class="role">Director</div>
+                <div class="period">January 2025 - Present</div>
+                <ul>
+                    <li>Direct initiatives serving 100,000+ people annually</li>
+                    <li>Lead 12+ projects in education and poverty alleviation</li>
+                    <li>Raised PKR 2 Million+ through strategic campaigns</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>Upskill</h3>
+                <div class="role">Campus & Brand Ambassador</div>
+                <div class="period">August 2025 - Present</div>
+                <ul>
+                    <li>Spearheading student outreach campaigns</li>
+                    <li>Increased campus engagement by 30%</li>
+                    <li>Organized networking events and information sessions</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>Colleges Pro</h3>
+                <div class="role">Marketing & PR Intern</div>
+                <div class="period">July 2025 - September 2025</div>
+                <ul>
+                    <li>Led educational counseling and marketing projects</li>
+                    <li>Compiled analytics reports and presentations</li>
+                    <li>Expanded brand reach throughout Lahore</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>EARC</h3>
+                <div class="role">Social Media Manager</div>
+                <div class="period">May 2024 - August 2024</div>
+                <ul>
+                    <li>Drove 60% audience growth</li>
+                    <li>Reached 20,000+ people with advocacy campaigns</li>
+                    <li>Managed legal research on environmental law</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>Adur Productions</h3>
+                <div class="role">Marketing & PR Assistant</div>
+                <div class="period">October 2023 - December 2023</div>
+                <ul>
+                    <li>Promoted 3-time award-winning film Gunjal</li>
+                    <li>Managed national and international PR campaigns</li>
+                    <li>Created engaging social media content</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>Film Festival Jury</h3>
+                <div class="role">Jury Member - LICFF</div>
+                <div class="period">2024</div>
+                <ul>
+                    <li>Judged 70+ film submissions</li>
+                    <li>Curated selections for 3000+ attendees</li>
+                    <li>Promoted socially relevant cinema</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>Leadership & Management</h3>
+                <div class="skill-tags">
+                    <div class="skill-tag">Event Management</div>
+                    <div class="skill-tag">Team Leadership</div>
+                    <div class="skill-tag">Project Coordination</div>
+                    <div class="skill-tag">Strategic Planning</div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Marketing & Communications</h3>
+                <div class="skill-tags">
+                    <div class="skill-tag">Social Media Marketing</div>
+                    <div class="skill-tag">PR & Outreach</div>
+                    <div class="skill-tag">Digital Strategy</div>
+                    <div class="skill-tag">Content Creation</div>
+                    <div class="skill-tag">Brand Development</div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Research & Analysis</h3>
+                <div class="skill-tags">
+                    <div class="skill-tag">Academic Writing</div>
+                    <div class="skill-tag">Research Methodology</div>
+                    <div class="skill-tag">Data Analysis</div>
+                    <div class="skill-tag">Presentations</div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Interests</h3>
+                <div class="skill-tags">
+                    <div class="skill-tag">Psychology</div>
+                    <div class="skill-tag">Photography</div>
+                    <div class="skill-tag">Entrepreneurship</div>
+                    <div class="skill-tag">Community Service</div>
+                    <div class="skill-tag">Writing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="activities" style="background: rgba(255, 255, 255, 0.02);">
+        <h2 class="section-title">Co-Curricular Leadership</h2>
+        <div class="experience-grid">
+            <div class="experience-card">
+                <h3>ISL Language & Literary Society</h3>
+                <div class="role">Journalism Head & Yearbook Editor</div>
+                <div class="period">August 2024 - Present</div>
+                <ul>
+                    <li>Led 10-member editorial team for annual yearbook production</li>
+                    <li>Published 15+ articles on student life and social issues</li>
+                    <li>Oversaw content writing, editing, and layout design</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>ISL Event Management Society</h3>
+                <div class="role">Event Registration Manager</div>
+                <div class="period">August 2024 - Present</div>
+                <ul>
+                    <li>Managed registrations for 2000+ participants</li>
+                    <li>Streamlined registration processes for smooth operations</li>
+                    <li>Enhanced participant experience through efficient systems</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>ISL Media & Graphics Society</h3>
+                <div class="role">Media Manager</div>
+                <div class="period">August 2024 - Present</div>
+                <ul>
+                    <li>Boosted digital footprint by 40% through targeted strategies</li>
+                    <li>Led promotional campaigns across multiple platforms</li>
+                    <li>Coordinated with creative teams for engaging coverage</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>LGS Media & Graphics Society</h3>
+                <div class="role">Media Head - Literature Games</div>
+                <div class="period">January 2024 - February 2024</div>
+                <ul>
+                    <li>Led media team for literary competitions</li>
+                    <li>Produced digital visual content for events</li>
+                    <li>Managed comprehensive event documentation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="research">
+        <h2 class="section-title">Research Contributions</h2>
+        <div class="experience-grid">
+            <div class="experience-card">
+                <h3>Uncovering Psychopathology in Greek Mythology</h3>
+                <div class="role">Independent Research</div>
+                <div class="period">2024</div>
+                <ul>
+                    <li>Explored intersections of psychology and classical mythology</li>
+                    <li>Analyzed recurring themes of trauma and morality</li>
+                    <li>Examined mental illness representations in Greek myths</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>Cognitive Impacts of Idiopathic Intracranial Hypertension</h3>
+                <div class="role">Independent Research</div>
+                <div class="period">2024</div>
+                <ul>
+                    <li>Investigated neurological impacts of IIH on cognition</li>
+                    <li>Bridged clinical psychology with lived experiences</li>
+                    <li>Contributed to awareness of rare neurological conditions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="volunteer" style="background: rgba(255, 255, 255, 0.02);">
+        <h2 class="section-title">Volunteer Work</h2>
+        <div class="experience-grid">
+            <div class="experience-card">
+                <h3>LUMS Project Justuju</h3>
+                <div class="role">School Head & Teacher</div>
+                <div class="period">June 2023 - August 2024</div>
+                <ul>
+                    <li>Completed comprehensive teaching methodology training</li>
+                    <li>Taught 50+ underprivileged children from grades 3-8</li>
+                    <li>Empowered students to achieve academic success</li>
+                    <li>Focused on holistic educational development</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>LSU Foundation</h3>
+                <div class="role">Teacher - Leadership for Social Uplift</div>
+                <div class="period">August 2024 - August 2025</div>
+                <ul>
+                    <li>Tutored students from diverse socioeconomic backgrounds</li>
+                    <li>Helped achieve improved academic performance</li>
+                    <li>Provided personalized educational support</li>
+                    <li>Built meaningful mentor-student relationships</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="awards">
+        <h2 class="section-title">Honours & Awards</h2>
+        <div class="awards-grid">
+            <div class="award-card">
+                <div class="award-icon">🏆</div>
+                <h3>1st Position</h3>
+                <p>Pakistan's Biggest Intercollege Art Festival</p>
+            </div>
+            <div class="award-card">
+                <div class="award-icon">🥇</div>
+                <h3>Best Delegation</h3>
+                <p>Sports Festival Champion</p>
+            </div>
+            <div class="award-card">
+                <div class="award-icon">🎖️</div>
+                <h3>1st Position</h3>
+                <p>Renaissance Project LACAS</p>
+            </div>
+            <div class="award-card">
+                <div class="award-icon">🏅</div>
+                <h3>2nd Position</h3>
+                <p>Pakistan's Biggest Intercollege Literary Festival</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-content">
+            <p style="font-size: 20px; color: #ccc; line-height: 1.8;">
+                Interested in collaboration, speaking opportunities, or just want to connect? 
+                I'd love to hear from you!
+            </p>
+            <a href="mailto:alihaatif26@gmail.com" class="contact-email">alihaatif26@gmail.com</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Aliha Atif. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'light') {
+            body.classList.add('light-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Download CV functionality
+        const downloadBtn = document.getElementById('downloadCV');
+        downloadBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // You'll need to upload your CV file and replace this URL
+            alert('Please upload your CV file and update the download link in the code.\n\nInstructions:\n1. Upload your CV to GitHub or Google Drive\n2. Replace the href="#" with your CV link\n3. For GitHub: Use the raw file URL\n4. For Google Drive: Use the direct download link');
+        });
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 5 + 2 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.experience-card, .award-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
