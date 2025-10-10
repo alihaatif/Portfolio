@@ -17,6 +17,7 @@
             color: #fff;
             overflow-x: hidden;
             transition: background 0.3s, color 0.3s;
+            perspective: 1000px;
         }
 
         body.light-mode {
@@ -29,7 +30,7 @@
         }
 
         body.light-mode nav {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
@@ -50,11 +51,6 @@
         body.light-mode .award-card {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        body.light-mode .experience-card:hover,
-        body.light-mode .award-card:hover {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
         body.light-mode .experience-card ul li,
@@ -93,32 +89,34 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            opacity: 0.3;
+            opacity: 0.4;
         }
 
         .particle {
             position: absolute;
             background: linear-gradient(45deg, #00f5ff, #ff00ff);
             border-radius: 50%;
-            animation: float 20s infinite;
+            animation: float3D 20s infinite;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+            transform-style: preserve-3d;
         }
 
-        @keyframes float {
+        @keyframes float3D {
             0%, 100% {
-                transform: translate(0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
                 opacity: 0.5;
             }
             25% {
-                transform: translate(100px, -100px) scale(1.2);
-                opacity: 0.8;
+                transform: translate3d(100px, -100px, 50px) scale(1.3);
+                opacity: 0.9;
             }
             50% {
-                transform: translate(-50px, -200px) scale(0.8);
+                transform: translate3d(-50px, -200px, -30px) scale(0.7);
                 opacity: 0.3;
             }
             75% {
-                transform: translate(-150px, -100px) scale(1.1);
-                opacity: 0.6;
+                transform: translate3d(-150px, -100px, 80px) scale(1.2);
+                opacity: 0.7;
             }
         }
 
@@ -131,9 +129,15 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 15px 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .nav-right {
@@ -152,21 +156,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all 0.5s;
             font-size: 18px;
         }
 
         .theme-toggle:hover {
             border-color: #00f5ff;
-            transform: rotate(180deg);
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
         }
 
         body.light-mode .theme-toggle {
             border-color: rgba(0, 0, 0, 0.3);
-        }
-
-        body.light-mode .theme-toggle:hover {
-            border-color: #00f5ff;
         }
 
         .logo {
@@ -207,6 +208,12 @@
             height: 2px;
             background: linear-gradient(45deg, #00f5ff, #ff00ff);
             transition: width 0.3s;
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.8);
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-3px);
+            text-shadow: 0 5px 10px rgba(0, 245, 255, 0.5);
         }
 
         .nav-links a:hover::after {
@@ -225,6 +232,18 @@
         .hero-content {
             max-width: 1200px;
             z-index: 1;
+            animation: heroEntrance 1.5s ease-out;
+        }
+
+        @keyframes heroEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-subtitle {
@@ -233,7 +252,19 @@
             text-transform: uppercase;
             color: #00f5ff;
             margin-bottom: 20px;
-            animation: fadeIn 1s ease-out;
+            animation: slideInLeft 1s ease-out;
+            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .hero h1 {
@@ -248,8 +279,14 @@
         .hero h1 .name {
             display: block;
             background: linear-gradient(120deg, #fff 0%, #00f5ff 50%, #ff00ff 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: textShine 3s linear infinite;
+        }
+
+        @keyframes textShine {
+            to { background-position: 200% center; }
         }
 
         .hero h1 .title-line {
@@ -292,7 +329,6 @@
             padding: 16px 48px;
             background: transparent;
             border: 2px solid #00f5ff;
-            border-radius: 0;
             color: #fff;
             font-size: 14px;
             letter-spacing: 2px;
@@ -300,9 +336,9 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.4s;
-            animation: fadeIn 2s ease-out;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .cta-button::before {
@@ -323,7 +359,8 @@
 
         .cta-button:hover {
             color: #0a0a0a;
-            border-color: #00f5ff;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.4);
         }
 
         .cta-button.secondary {
@@ -335,11 +372,15 @@
         }
 
         .cta-button.secondary:hover {
-            border-color: #ff00ff;
+            box-shadow: 0 20px 40px rgba(255, 0, 255, 0.4);
         }
 
         body.light-mode .cta-button {
             color: #1a1a1a;
+        }
+
+        body.light-mode .cta-button:hover {
+            color: #fff;
         }
 
         @keyframes fadeIn {
@@ -360,6 +401,12 @@
             background: linear-gradient(45deg, #00f5ff, #ff00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         .about-content {
@@ -384,14 +431,16 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 30px;
-            transition: all 0.3s;
+            transition: all 0.5s;
             backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
         }
 
         .experience-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) rotateX(5deg);
             border-color: #00f5ff;
-            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+            background: rgba(0, 245, 255, 0.05);
         }
 
         .experience-card h3 {
@@ -456,12 +505,13 @@
             border: 1px solid rgba(0, 245, 255, 0.5);
             padding: 10px 20px;
             border-radius: 20px;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            transform-style: preserve-3d;
         }
 
         .skill-tag:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+            transform: scale(1.1) translateZ(20px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.5);
         }
 
         .awards-grid {
@@ -478,17 +528,24 @@
             border-radius: 15px;
             padding: 25px;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.5s;
+            transform-style: preserve-3d;
         }
 
         .award-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
+            transform: scale(1.05) rotateY(5deg);
+            box-shadow: 0 15px 40px rgba(255, 0, 255, 0.4);
         }
 
         .award-icon {
             font-size: 40px;
             margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .contact-content {
@@ -507,12 +564,14 @@
             color: #00f5ff;
             font-size: 20px;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            transform-style: preserve-3d;
         }
 
         .contact-email:hover {
             background: rgba(0, 245, 255, 0.1);
-            box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.5);
+            transform: translateY(-5px) scale(1.05);
         }
 
         footer {
@@ -530,17 +589,35 @@
             background: linear-gradient(45deg, #00f5ff, #ff00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: statCount 2s ease-out;
+        }
+
+        @keyframes statCount {
+            from { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 40px;
             }
+            .hero h1 .title-line {
+                font-size: 32px;
+            }
             .hero p {
-                font-size: 18px;
+                font-size: 16px;
             }
             nav {
                 padding: 15px 20px;
+            }
+            .nav-links {
+                display: none;
             }
             section {
                 padding: 50px 20px;
@@ -548,13 +625,45 @@
             .section-title {
                 font-size: 32px;
             }
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Parallax effect */
+        .parallax {
+            transition: transform 0.5s ease-out;
+        }
+
+        /* Cursor trail effect */
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.5), transparent);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
         }
     </style>
 </head>
 <body>
     <div class="bg-animation" id="particles"></div>
 
-    <nav>
+    <nav id="navbar">
         <div class="logo">ALIHA ATIF</div>
         <div class="nav-right">
             <div class="nav-links">
@@ -586,8 +695,7 @@
                 <a href="MyCV.pdf" class="cta-button secondary">
                     <span>Download CV</span>
                     <span>📄</span>
-</a>
-
+                </a>
                 <a href="https://linkedin.com/in/aliha-atif" target="_blank" class="cta-button secondary">
                     <span>LinkedIn</span>
                     <span>→</span>
@@ -596,7 +704,7 @@
         </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="reveal">
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
             <p>Creative and socially-driven leader with experience in event management, digital strategy, teaching, and advocacy. Skilled in leading campaigns, coordinating large-scale events, and building community engagement. Passionate about using entrepreneurship and storytelling to drive meaningful change.</p>
@@ -617,7 +725,7 @@
         </div>
     </section>
 
-    <section id="experience">
+    <section id="experience" class="reveal">
         <h2 class="section-title">Professional Experience</h2>
         <div class="experience-grid">
             <div class="experience-card">
@@ -688,7 +796,7 @@
         </div>
     </section>
 
-    <section id="skills">
+    <section id="skills" class="reveal">
         <h2 class="section-title">Skills & Expertise</h2>
         <div class="skills-container">
             <div class="skill-category">
@@ -732,7 +840,7 @@
         </div>
     </section>
 
-    <section id="activities" style="background: rgba(255, 255, 255, 0.02);">
+    <section id="activities" class="reveal" style="background: rgba(255, 255, 255, 0.02);">
         <h2 class="section-title">Co-Curricular Leadership</h2>
         <div class="experience-grid">
             <div class="experience-card">
@@ -781,7 +889,7 @@
         </div>
     </section>
 
-    <section id="research">
+    <section id="research" class="reveal">
         <h2 class="section-title">Research Contributions</h2>
         <div class="experience-grid">
             <div class="experience-card">
@@ -808,7 +916,7 @@
         </div>
     </section>
 
-    <section id="volunteer" style="background: rgba(255, 255, 255, 0.02);">
+    <section id="volunteer" class="reveal" style="background: rgba(255, 255, 255, 0.02);">
         <h2 class="section-title">Volunteer Work</h2>
         <div class="experience-grid">
             <div class="experience-card">
@@ -837,7 +945,7 @@
         </div>
     </section>
 
-    <section id="awards">
+    <section id="awards" class="reveal">
         <h2 class="section-title">Honours & Awards</h2>
         <div class="awards-grid">
             <div class="award-card">
@@ -863,7 +971,7 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="reveal">
         <h2 class="section-title">Let's Connect</h2>
         <div class="contact-content">
             <p style="font-size: 20px; color: #ccc; line-height: 1.8;">
@@ -883,7 +991,6 @@
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         
-        // Check for saved theme preference or default to dark
         const currentTheme = localStorage.getItem('theme') || 'dark';
         if (currentTheme === 'light') {
             body.classList.add('light-mode');
@@ -902,20 +1009,12 @@
             }
         });
 
-        // Download CV functionality
-        const downloadBtn = document.getElementById('downloadCV');
-        downloadBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            // You'll need to upload your CV file and replace this URL
-            alert('Please upload your CV file and update the download link in the code.\n\nInstructions:\n1. Upload your CV to GitHub or Google Drive\n2. Replace the href="#" with your CV link\n3. For GitHub: Use the raw file URL\n4. For Google Drive: Use the direct download link');
-        });
-
-        // Create floating particles
+        // Create 3D floating particles
         const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 60; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
-            particle.style.width = Math.random() * 5 + 2 + 'px';
+            particle.style.width = Math.random() * 6 + 2 + 'px';
             particle.style.height = particle.style.width;
             particle.style.left = Math.random() * 100 + '%';
             particle.style.top = Math.random() * 100 + '%';
@@ -935,22 +1034,152 @@
             });
         });
 
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        // Scroll reveal animations
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
                 }
             });
-        }, { threshold: 0.1 });
+        };
 
-        document.querySelectorAll('.experience-card, .award-card').forEach(el => {
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Card 3D tilt effect on mouse move
+        const cards = document.querySelectorAll('.experience-card, .award-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.hero-content');
+            
+            parallaxElements.forEach(element => {
+                element.style.transform = `translateY(${scrolled * 0.3}px)`;
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animated counter for statistics
+        const animateCounter = (element, target) => {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 20);
+        };
+
+        // Observer for stats animation
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const text = stat.textContent;
+                        if (!stat.dataset.animated) {
+                            stat.dataset.animated = 'true';
+                            // Keep original text with formatting
+                        }
+                    });
+                }
+            });
+        });
+
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+            statsObserver.observe(aboutSection);
+        }
+
+        // Cursor trail effect (optional - can be removed if too much)
+        let trails = [];
+        const maxTrails = 10;
+
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            document.body.appendChild(trail);
+            
+            trails.push(trail);
+            
+            if (trails.length > maxTrails) {
+                const oldTrail = trails.shift();
+                oldTrail.remove();
+            }
+            
+            setTimeout(() => {
+                trail.style.opacity = '0';
+                setTimeout(() => trail.remove(), 300);
+            }, 100);
+        });
+
+        // Add stagger animation to cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.experience-card, .award-card, .skill-category').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
+            cardObserver.observe(el);
         });
+
+        console.log('🚀 Portfolio loaded with 3D effects!');
     </script>
 </body>
 </html>
