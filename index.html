@@ -725,18 +725,17 @@
 }
 </style>
    <style>
-/* Horizontal gallery styling */
+/* === Interests Horizontal Gallery === */
 .interest-gallery {
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap;
   gap: 25px;
   overflow-x: auto;
   padding: 40px 0;
   scroll-behavior: smooth;
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 .interest-gallery.show {
@@ -754,7 +753,7 @@
 }
 
 .interest-item img:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 </style>
 </head>
@@ -927,23 +926,25 @@
             </div>
             <div class="skill-category">
                 <h3>Interests</h3>
-                <div class="skill-tags">
-                    <div class="skill-tag">Psychology</div>
-                    <div class="skill-tag">Photography</div>
-                    <div class="skill-tag">Entrepreneurship</div>
-                    <div class="skill-tag">Community Service</div>
-                    <div class="skill-tag">Writing</div>
-                </div>
-               <!-- Interests Image Gallery -->
-<div class="interest-gallery">
-  <div class="interest-item"><img src="images/image1.jpg" alt="Interest 1"></div>
-  <div class="interest-item"><img src="images/image2.jpg" alt="Interest 2"></div>
-  <div class="interest-item"><img src="images/image3.jpg" alt="Interest 3"></div>
-  <div class="interest-item"><img src="images/image4.jpg" alt="Interest 4"></div>
-  <div class="interest-item"><img src="images/image5.jpg" alt="Interest 5"></div>
-  <div class="interest-item"><img src="images/image6.jpg" alt="Interest 6"></div>
+<div class="skill-tags">
+  <div class="skill-tag">Psychology</div>
+  <div class="skill-tag">Photography</div>
+  <div class="skill-tag">Entrepreneurship</div>
+  <div class="skill-tag">Community Service</div>
+  <div class="skill-tag">Writing</div>
 </div>
 
+<!-- Horizontal Scroll Gallery -->
+<section id="interests-gallery">
+  <div class="interest-gallery">
+    <div class="interest-item"><img src="images/image1.jpg" alt="Interest 1"></div>
+    <div class="interest-item"><img src="images/image2.jpg" alt="Interest 2"></div>
+    <div class="interest-item"><img src="images/image3.jpg" alt="Interest 3"></div>
+    <div class="interest-item"><img src="images/image4.jpg" alt="Interest 4"></div>
+    <div class="interest-item"><img src="images/image5.jpg" alt="Interest 5"></div>
+    <div class="interest-item"><img src="images/image6.jpg" alt="Interest 6"></div>
+  </div>
+</section>
     <section id="activities" class="reveal" style="background: rgba(255, 255, 255, 0.02);">
         <h2 class="section-title">Co-Curricular Leadership</h2>
         <div class="experience-grid">
@@ -1309,13 +1310,20 @@ window.addEventListener('scroll', () => {
 });
 </script>
               <script>
-window.addEventListener('scroll', function() {
-  const gallery = document.querySelector('.interest-gallery');
-  const position = gallery.getBoundingClientRect().top;
-  const screenHeight = window.innerHeight;
-  if (position < screenHeight - 100) {
-    gallery.classList.add('show');
+document.addEventListener("DOMContentLoaded", function() {
+  const gallery = document.querySelector(".interest-gallery");
+
+  function revealGallery() {
+    const position = gallery.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    if (position < windowHeight - 100) {
+      gallery.classList.add("show");
+      window.removeEventListener("scroll", revealGallery);
+    }
   }
+
+  window.addEventListener("scroll", revealGallery);
+  revealGallery(); // Run once in case already visible
 });
 </script>
 </body>
