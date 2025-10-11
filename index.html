@@ -724,15 +724,15 @@
   transform: translateY(0);
 }
 </style>
-    <style>
+   <style>
 /* Horizontal gallery styling */
 .interest-gallery {
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
-  gap: 20px;
+  gap: 25px;
   overflow-x: auto;
-  padding: 30px 0;
+  padding: 40px 0;
   scroll-behavior: smooth;
   opacity: 0;
   transform: translateY(30px);
@@ -745,11 +745,12 @@
 }
 
 .interest-item img {
-  height: 180px;
+  height: 200px;
   width: auto;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   transition: transform 0.4s ease;
+  cursor: pointer;
 }
 
 .interest-item img:hover {
@@ -1307,7 +1308,7 @@ window.addEventListener('scroll', () => {
   }
 });
 </script>
-                <script>
+              <script>
 window.addEventListener('scroll', function() {
   const gallery = document.querySelector('.interest-gallery');
   const position = gallery.getBoundingClientRect().top;
