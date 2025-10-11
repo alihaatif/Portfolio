@@ -658,7 +658,72 @@
     z-index: 9999;
     transition: transform 0.1s;
 }
-    </style>
+<style>
+/* === Carousel Gallery Styles === */
+.carousel-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 60px auto 0;
+  perspective: 1000px;
+  position: relative;
+  height: 350px;
+}
+
+.carousel {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: spin 30s linear infinite;
+}
+
+.carousel-item {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Spin animation */
+@keyframes spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Hover pause */
+.carousel-container:hover .carousel {
+  animation-play-state: paused;
+}
+
+/* Scroll animation fade-in */
+.carousel-container {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.carousel-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
 </head>
 <body>
     <div class="bg-animation" id="particles"></div>
@@ -1192,5 +1257,28 @@ document.addEventListener('mousemove', (e) => {
 
         console.log('🚀 Portfolio loaded with 3D effects!');
     </script>
+    <script>
+// === Carousel Rotation Logic ===
+const carousel = document.getElementById('carousel');
+const items = carousel.querySelectorAll('.carousel-item');
+const radius = 300;
+const itemCount = items.length;
+
+items.forEach((item, i) => {
+  const angle = (360 / itemCount) * i;
+  item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+});
+
+// === Scroll Animation for Carousel ===
+window.addEventListener('scroll', () => {
+  const carouselSection = document.querySelector('.carousel-container');
+  const sectionTop = carouselSection.getBoundingClientRect().top;
+  const triggerPoint = window.innerHeight * 0.8;
+
+  if (sectionTop < triggerPoint) {
+    carouselSection.classList.add('visible');
+  }
+});
+</script>
 </body>
 </html>
