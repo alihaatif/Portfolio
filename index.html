@@ -647,17 +647,118 @@
             transition: transform 0.5s ease-out;
         }
 
-        /* Cursor trail effect */
-        .cursor-trail {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.5), transparent);
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s;
-        }
+       /* Fluid Glass Cursor */
+.cursor-main {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    background: rgba(0, 245, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.1s ease;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.6);
+}
+
+.cursor-follower {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.2), rgba(255, 0, 255, 0.1));
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s cubic-bezier(0.75, -0.5, 0, 1.75);
+    backdrop-filter: blur(5px);
+}
+
+.cursor-glow {
+    position: fixed;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.15), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9997;
+    transition: all 0.3s ease;
+    filter: blur(20px);
+    mix-blend-mode: screen;
+}
+
+.cursor-ripple {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 245, 255, 0.6);
+    pointer-events: none;
+    z-index: 9996;
+    animation: rippleEffect 1s ease-out forwards;
+}
+
+@keyframes rippleEffect {
+    0% {
+        width: 10px;
+        height: 10px;
+        opacity: 1;
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+    }
+}
+
+.cursor-main.hover {
+    transform: scale(0.5);
+    background: rgba(255, 0, 255, 1);
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
+}
+
+.cursor-follower.hover {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.2), rgba(0, 245, 255, 0.1));
+    border-color: rgba(255, 0, 255, 0.5);
+}
+
+.cursor-glow.hover {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.2), transparent 70%);
+}
+
+body.light-mode .cursor-main {
+    background: rgba(0, 100, 255, 0.8);
+    box-shadow: 0 0 20px rgba(0, 100, 255, 0.6);
+}
+
+body.light-mode .cursor-follower {
+    background: radial-gradient(circle, rgba(0, 100, 255, 0.2), rgba(255, 0, 100, 0.1));
+    border-color: rgba(0, 100, 255, 0.3);
+}
+
+body {
+    cursor: none;
+}
+
+a, button, .cta-button, .experience-card, .award-card, .skill-tag {
+    cursor: none !important;
+}
+
+@media (max-width: 768px) {
+    body {
+        cursor: auto;
+    }
+    
+    .cursor-main,
+    .cursor-follower,
+    .cursor-glow,
+    .cursor-ripple {
+        display: none !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -1131,29 +1232,91 @@
             statsObserver.observe(aboutSection);
         }
 
-        // Cursor trail effect (optional - can be removed if too much)
-        let trails = [];
-        const maxTrails = 10;
+       // Fluid Glass Cursor Effect
+const cursorMain = document.createElement('div');
+const cursorFollower = document.createElement('div');
+const cursorGlow = document.createElement('div');
 
-        document.addEventListener('mousemove', (e) => {
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            document.body.appendChild(trail);
-            
-            trails.push(trail);
-            
-            if (trails.length > maxTrails) {
-                const oldTrail = trails.shift();
-                oldTrail.remove();
-            }
-            
-            setTimeout(() => {
-                trail.style.opacity = '0';
-                setTimeout(() => trail.remove(), 300);
-            }, 100);
-        });
+cursorMain.className = 'cursor-main';
+cursorFollower.className = 'cursor-follower';
+cursorGlow.className = 'cursor-glow';
+
+document.body.appendChild(cursorMain);
+document.body.appendChild(cursorFollower);
+document.body.appendChild(cursorGlow);
+
+let mouseX = 0;
+let mouseY = 0;
+let followerX = 0;
+let followerY = 0;
+let glowX = 0;
+let glowY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    cursorMain.style.left = mouseX + 'px';
+    cursorMain.style.top = mouseY + 'px';
+});
+
+function animateCursor() {
+    followerX += (mouseX - followerX) * 0.15;
+    followerY += (mouseY - followerY) * 0.15;
+    
+    cursorFollower.style.left = (followerX - 25) + 'px';
+    cursorFollower.style.top = (followerY - 25) + 'px';
+    
+    glowX += (mouseX - glowX) * 0.08;
+    glowY += (mouseY - glowY) * 0.08;
+    
+    cursorGlow.style.left = (glowX - 75) + 'px';
+    cursorGlow.style.top = (glowY - 75) + 'px';
+    
+    requestAnimationFrame(animateCursor);
+}
+
+animateCursor();
+
+document.addEventListener('click', (e) => {
+    const ripple = document.createElement('div');
+    ripple.className = 'cursor-ripple';
+    ripple.style.left = e.clientX + 'px';
+    ripple.style.top = e.clientY + 'px';
+    document.body.appendChild(ripple);
+    
+    setTimeout(() => ripple.remove(), 1000);
+});
+
+const hoverElements = document.querySelectorAll('a, button, .cta-button, .experience-card, .award-card, .skill-tag, .theme-toggle');
+
+hoverElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        cursorMain.classList.add('hover');
+        cursorFollower.classList.add('hover');
+        cursorGlow.classList.add('hover');
+    });
+    
+    el.addEventListener('mouseleave', () => {
+        cursorMain.classList.remove('hover');
+        cursorFollower.classList.remove('hover');
+        cursorGlow.classList.remove('hover');
+    });
+});
+
+document.addEventListener('mouseleave', () => {
+    cursorMain.style.opacity = '0';
+    cursorFollower.style.opacity = '0';
+    cursorGlow.style.opacity = '0';
+});
+
+document.addEventListener('mouseenter', () => {
+    cursorMain.style.opacity = '1';
+    cursorFollower.style.opacity = '1';
+    cursorGlow.style.opacity = '1';
+});
+
+console.log('🌊 Fluid Glass Cursor Activated!');
 
         // Add stagger animation to cards
         const observerOptions = {
